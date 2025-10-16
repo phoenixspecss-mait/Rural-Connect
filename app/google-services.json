@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "58425134181",
+    "project_id": "rural-connect-b5e29",
+    "storage_bucket": "rural-connect-b5e29.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58425134181:android:9fde3483f673ad2c52ca8c",
+        "android_client_info": {
+          "package_name": "com.example.ruralconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3n6O2OQscU9VjpdSmnTIGBMQhbQ1yveQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

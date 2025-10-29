@@ -4,8 +4,8 @@
     package="com.example.ruralconnect">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RuralConnect">
+        <activity
+            android:name=".Terms_Conditions"
+            android:exported="false" />
+        <activity
+            android:name=".Privacy_Policy"
+            android:exported="false" />
+        <activity
+            android:name=".About"
+            android:exported="false" />
         <activity
             android:name=".Register_Complaint"
             android:exported="false" />

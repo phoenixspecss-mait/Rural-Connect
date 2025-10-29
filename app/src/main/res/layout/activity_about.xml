@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    tools:context=".About">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="About"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:lineSpacingExtra="6dp"
+                android:text=" RuralConnect is a community-driven digital platform designed to empower and uplift rural India by bridging the gap between people, services, and opportunities. It serves as a one-stop solution that connects farmers, artisans, students, entrepreneurs, and citizens to essential resources, government schemes, marketplaces, healthcare, and education — all within one simple and user-friendly application.  RuralConnect aims to make information and services accessible, transparent, and localized. It was built with the belief that digital technology should not just be for cities, but for everyone — especially those in rural areas who can benefit the most from it. The app provides easy access to verified content, real-time updates, and personalized support in multiple regional languages, ensuring no one is left behind due to lack of awareness or connectivity.  Through its features, RuralConnect allows users to explore nearby markets, sell or buy agricultural produce, discover new job opportunities, and stay informed about important government initiatives. Farmers can receive daily weather updates, crop care tips, and mandi prices, while local entrepreneurs and artisans can promote their products and services to a wider audience. Students and youth can explore free and paid learning modules to enhance their skills and find employment or training opportunities suited to their interests.  RuralConnect also focuses on healthcare awareness and teleconsultation support, helping people connect with nearby clinics, health workers, and verified medical professionals. The app enables access to health-related information, vaccination schedules, and essential government health programs.  Beyond services, RuralConnect also functions as a social platform for civic engagement. It offers features like community news, panchayat updates, grievance submission, and status tracking — giving every citizen a voice in their local development.  Built to work smoothly even with low internet connectivity, the app ensures offline access to key features and synchronizes data whenever the network is available. It uses simple navigation, visual icons, and audio support to ensure that everyone, regardless of digital literacy, can use it with ease.  At its core, RuralConnect stands for empowerment, inclusion, and sustainability. It envisions a future where every rural citizen can access opportunities, earn fair income, and improve their quality of life using the power of digital technology.  RuralConnect — Connecting Rural India to a Better Tomorrow." />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,4 +37,19 @@ public class Profile_page extends AppCompatActivity {
         Intent intent6 = new Intent(this, Register_Complaint.class);
         startActivity(intent6);
     }
+    public void openAbout(View View) {
+        Toast.makeText(this, "Opening...", Toast.LENGTH_SHORT).show();
+        Intent intent7 = new Intent(this, About.class);
+        startActivity(intent7);
+    }
+    public void openPrivacy(View View) {
+        Toast.makeText(this, "Opening...", Toast.LENGTH_SHORT).show();
+        Intent intent8 = new Intent(this, Privacy_Policy.class);
+        startActivity(intent8);
+    }
+    public void openTerms(View View) {
+        Toast.makeText(this, "Opening...", Toast.LENGTH_SHORT).show();
+        Intent intent9 = new Intent(this, Terms_Conditions.class);
+        startActivity(intent9);
+    }
 }

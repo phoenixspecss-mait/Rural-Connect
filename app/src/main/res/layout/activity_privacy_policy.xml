@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    tools:context=".Privacy_Policy">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Privacy Policy"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:lineSpacingExtra="6dp"
+                android:text="Last Updated: October 2025  Welcome to RuralConnect. Your privacy is important to us. This Privacy Policy explains how we collect, use, protect, and share your information when you use the RuralConnect mobile application (“App”) and related services (“Service”). By using the App, you agree to the terms described in this Privacy Policy.  ⸻  1. Information We Collect  We may collect the following types of information when you use RuralConnect:  a. Personal Information Information you provide directly, such as: 	•	Name, age, gender 	•	Contact details (phone number, email address) 	•	Address or location details (for localized services) 	•	Profile photo or identification documents (if required for verification)  b. Non-Personal Information Automatically collected data that helps us improve the app: 	•	Device type, model, and operating system 	•	App version, crash logs, and usage statistics 	•	Approximate location (only with your permission) 	•	Network and connectivity details  c. Optional Information When you interact with specific features (like marketplace listings, government schemes, or health consultations), you may choose to share: 	•	Crop or product details 	•	Images or documents 	•	Feedback or messages  You can always choose not to provide optional information, but some features may not function fully without it.  ⸻  2. How We Use Your Information  We use the information we collect to: 	•	Provide and improve app services and user experience 	•	Customize content and recommendations based on your location and interests 	•	Send important updates such as scheme notifications, weather alerts, or training opportunities 	•	Verify your account and secure your profile 	•	Respond to feedback, queries, and support requests 	•	Monitor and analyze usage to enhance app performance  We do not sell, rent, or trade your personal information to anyone.  ⸻  3. How We Protect Your Information  We take your privacy seriously and use reasonable security measures to safeguard your information: 	•	Encrypted data transmission (HTTPS) 	•	Secure storage of sensitive data 	•	Limited access to personal information for authorized staff only 	•	Regular security updates and audits  While we work hard to protect your data, please understand that no system is completely secure, and you share information at your own risk.  ⸻  4. Sharing of Information  We may share information only in the following cases: 	•	With your consent — for example, when you share a product listing or send a message. 	•	With government or service partners — when you choose to apply for a scheme, verify a record, or use integrated features. 	•	With third-party providers — who help us run the app (e.g., SMS services, hosting, analytics). They are required to follow strict privacy obligations. 	•	For legal reasons — if required by law, court order, or government authority.  We never share your personal data for advertising or marketing without your permission.  ⸻  5. Cookies and Analytics  RuralConnect may use cookies or similar technologies to understand usage patterns and improve performance. These are small files stored on your device that help the app remember your preferences. You can disable cookies in your device settings, but some features may not work as intended.  ⸻ " />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

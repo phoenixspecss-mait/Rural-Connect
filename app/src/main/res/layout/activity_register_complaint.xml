@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    tools:context=".Register_Complaint">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/playwrite"
+        android:text="Register Complaint"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Enter your name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldContact"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Enter your contact number"
+        app:layout_constraintEnd_toEndOf="@+id/textFieldName"
+        app:layout_constraintStart_toStartOf="@+id/textFieldName"
+        app:layout_constraintTop_toBottomOf="@+id/textFieldName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewComplaintType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Complaint Type"
+        app:layout_constraintStart_toStartOf="@+id/textFieldContact"
+        app:layout_constraintTop_toBottomOf="@+id/textFieldContact" />
+
+    <Spinner
+        android:id="@+id/spinnerComplaintType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textFieldContact"
+        app:layout_constraintStart_toStartOf="@+id/textFieldContact"
+        app:layout_constraintTop_toBottomOf="@+id/textViewComplaintType" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldOtherComplaint"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Please specify"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerComplaintType"
+        app:layout_constraintStart_toStartOf="@+id/spinnerComplaintType"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerComplaintType">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextOtherComplaint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldLocation"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Enter your location"
+        app:layout_constraintEnd_toEndOf="@+id/textFieldContact"
+        app:layout_constraintStart_toStartOf="@+id/textFieldContact"
+        app:layout_constraintTop_toBottomOf="@+id/textFieldOtherComplaint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/imageViewPreview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Image Preview"
+        android:scaleType="centerCrop"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintStart_toStartOf="@+id/textFieldLocation"
+        app:layout_constraintTop_toBottomOf="@+id/textFieldLocation" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAddImage"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Add Image"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPreview"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPreview"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPreview" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/image_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="imageViewPreview,buttonAddImage" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldComplaint"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your complaint"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubmit"
+        app:layout_constraintEnd_toEndOf="@+id/textFieldLocation"
+        app:layout_constraintStart_toStartOf="@+id/textFieldLocation"
+        app:layout_constraintTop_toBottomOf="@+id/image_barrier">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextComplaint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:inputType="textMultiLine" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Submit Complaint"
+        android:textSize="16sp"
+        app:backgroundTint="@color/blue_green"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textFieldComplaint"
+        app:layout_constraintStart_toStartOf="@+id/textFieldComplaint" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,4 +9,8 @@
     <color name="light_blue">#E3F2FD</color>
     <color name="cream">#FFFDE7</color>
     <color name="light_grey">#F5F5F5</color>
+    <color name="toad_green">#A3C639</color>
+    <color name="yellow">#FFC107</color>
+    <color name="blue_green">#00BFA5</color>
+
 </resources>

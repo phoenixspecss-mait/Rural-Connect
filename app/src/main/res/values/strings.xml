@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Rural Connect</string>
     <string name="welcome_to_rural_connect">Welcome To Rural Connect</string>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Hindi</item>
+        <item>Punjabi</item>
+        <item>Urdu</item>
+    </string-array>
 </resources>

@@ -11,30 +11,30 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Login_page extends AppCompatActivity {
+public class Profile_page extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login_page);
+        setContentView(R.layout.activity_profile_page);
 
-        // Adjusts for system bars (status/navigation)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-    public void openActivity2(View view){
-        Toast.makeText(this, "Opening User Interface.....", Toast.LENGTH_SHORT).show();
+
+    public void openHomePage(View view) {
+        Toast.makeText(this, "Opening Home Page....", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, User_Interface.class);
         startActivity(intent);
     }
 
-    public void openProgress(View view){
-        Toast.makeText(this, "Checking Progress.....", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, Progress.class);
-        startActivity(intent);
+    public void openNewComp(View View) {
+        Toast.makeText(this, "Opening...", Toast.LENGTH_SHORT).show();
+        Intent intent6 = new Intent(this, Register_Complaint.class);
+        startActivity(intent6);
     }
 }

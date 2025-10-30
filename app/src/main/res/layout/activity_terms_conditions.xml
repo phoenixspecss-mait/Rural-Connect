@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    tools:context=".Terms_Conditions">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Terms and Conditions"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:lineSpacingExtra="3dp"
+                android:text="&#xA;Last Updated: October 2025&#xA;&#xA;Welcome to RuralConnect.&#xA;These Terms and Conditions (“Terms”) govern your use of the RuralConnect mobile application and related services (collectively referred to as “the App” or “the Service”).&#xA;By downloading, accessing, or using RuralConnect, you agree to be bound by these Terms. If you do not agree, please do not use the App.&#xA;&#xA;⸻&#xA;&#xA;1. Purpose of the App&#xA;&#xA;RuralConnect is designed to connect rural communities with digital services, including access to government schemes, local marketplaces, educational resources, healthcare information, and community updates.&#xA;While we strive to provide accurate and reliable information, the content on RuralConnect is for informational and assistance purposes only and should not be considered as professional, legal, financial, or medical advice.&#xA;&#xA;⸻&#xA;&#xA;2. User Responsibilities&#xA;&#xA;By using RuralConnect, you agree to:&#xA;	•	Provide true, accurate, and complete information when registering or using the App.&#xA;	•	Use the App only for lawful purposes and in a respectful manner.&#xA;	•	Not engage in any activity that may harm, disrupt, or interfere with the App’s services or security.&#xA;	•	Not post, upload, or share false, harmful, or offensive content.&#xA;&#xA;You are solely responsible for the information and content you share on the platform.&#xA;&#xA;⸻&#xA;&#xA;3. Accounts and Security&#xA;&#xA;Some parts of the App may require you to create an account.&#xA;You are responsible for maintaining the confidentiality of your login details and for all activities under your account.&#xA;RuralConnect will not be responsible for any loss or damage caused by unauthorized access to your account.&#xA;&#xA;⸻&#xA;&#xA;4. Data Privacy&#xA;&#xA;We respect your privacy.&#xA;All personal information collected through RuralConnect is handled according to our Privacy Policy, which explains how we collect, use, and protect your data.&#xA;By using the App, you consent to the collection and use of your information as described in the Privacy Policy.&#xA;&#xA;⸻&#xA;&#xA;5. Third-Party Links and Services&#xA;&#xA;The App may include links or references to external websites, services, or third-party content (such as marketplaces, payment gateways, or government portals).&#xA;RuralConnect does not control or endorse these third parties and is not responsible for their accuracy, availability, or privacy practices.&#xA;Users are encouraged to read the terms and policies of those third-party sites before engaging with them.&#xA;&#xA;⸻&#xA;&#xA;6. Intellectual Property&#xA;&#xA;All content, logos, icons, text, images, and software within RuralConnect are the intellectual property of the developers and content partners, unless otherwise stated.&#xA;You may not copy, modify, distribute, or reproduce any part of the App without prior written permission.&#xA;&#xA;⸻&#xA;&#xA;7. Disclaimer and Limitation of Liability&#xA;&#xA;RuralConnect is provided “as is” and “as available.”&#xA;While we make every effort to ensure the accuracy of information and uninterrupted service, we do not guarantee that the App will always function error-free or that the information provided will always be up to date.&#xA;RuralConnect and its creators are not liable for any direct or indirect losses, damages, or consequences arising from the use or inability to use the App, including but not limited to loss of data, profits, or opportunities.&#xA;&#xA;⸻&#xA;&#xA;8. Changes to the App or Terms&#xA;&#xA;We may update, modify, or discontinue any feature of the App at any time without prior notice.&#xA;We may also update these Terms periodically.&#xA;Any changes will be posted here, and continued use of the App means you accept the updated Terms.&#xA;&#xA;⸻&#xA;&#xA;9. Termination of Access&#xA;&#xA;We reserve the right to suspend or terminate your access to RuralConnect if you violate these Terms, misuse the platform, or engage in any illegal or harmful activity.&#xA;&#xA;⸻&#xA;&#xA;10. Governing Law&#xA;&#xA;These Terms and Conditions shall be governed by and interpreted in accordance with the laws of India.&#xA;Any disputes arising out of or in connection with the App shall be subject to the exclusive jurisdiction of the courts located in India.&#xA;&#xA;⸻&#xA;&#xA;11. Contact Us&#xA;&#xA;If you have any questions, feedback, or concerns about these Terms, please contact us at:&#xA;📧 support@ruralconnect.in&#xA;&#xA;⸻&#xA;&#xA;Summary&#xA;&#xA;By using RuralConnect, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.&#xA;We thank you for being part of our mission to digitally empower rural communities." />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,9 +38,7 @@ public class Login_page extends AppCompatActivity {
         sessionManager = new SessionManager(getApplicationContext());
 
         // --- Check if already logged in ---
-        if (sessionManager.isLoggedIn()) {
-            goToUserInterface(); // Skip login
-        }
+
 
         // --- THIS IS THE FIX ---
         // These IDs now match your new XML file

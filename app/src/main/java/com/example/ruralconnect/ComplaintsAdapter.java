@@ -4,17 +4,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.ruralconnect.R;
+import com.example.ruralconnect.model.Complaint; // Make sure this import is correct
 import java.util.List;
 
-public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.ViewHolder> {
+public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.ComplaintViewHolder> {
 
-    private List<Complaint> complaints;
-    private OnItemClickListener listener;
+    private List<Complaint> complaintList;
+    private OnItemClickListener listener; // For handling clicks
 
+    // Interface for click events
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -23,38 +24,60 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.Vi
         this.listener = listener;
     }
 
-    public ComplaintsAdapter(List<Complaint> complaints) {
-        this.complaints = complaints;
+    public ComplaintsAdapter(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.complaint_item, parent, false);
-        return new ViewHolder(view, listener);
+    public ComplaintViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Make sure you have a layout file named 'list_item_complaint.xml'
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_complaint, parent, false);
+        return new ComplaintViewHolder(view, listener); // Pass listener
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Complaint complaint = complaints.get(position);
-        holder.title.setText(complaint.getTitle());
-        holder.description.setText(complaint.getDescription());
+    public void onBindViewHolder(@NonNull ComplaintViewHolder holder, int position) {
+        Complaint complaint = complaintList.get(position);
+
+        // --- THIS IS THE FIX ---
+        // Use the new methods from your Complaint POJO
+        holder.titleTextView.setText(complaint.getComplaintType()); // Use type as title
+        holder.descriptionTextView.setText(complaint.getComplaintText()); // Use complaint text as description
+        // --- END OF FIX ---
+
+        // Show status only if it exists
+        if (complaint.getStatus() != null) {
+            holder.statusTextView.setText("Status: " + complaint.getStatus());
+            holder.statusTextView.setVisibility(View.VISIBLE);
+        } else {
+            holder.statusTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return complaints.size();
+        return complaintList == null ? 0 : complaintList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    // Method to update the list when data is fetched from API
+    public void updateComplaints(List<Complaint> newComplaints) {
+        this.complaintList = newComplaints;
+        notifyDataSetChanged(); // Refresh the entire list view
+    }
 
-        public TextView title;
-        public TextView description;
+    static class ComplaintViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView;
+        TextView descriptionTextView;
+        TextView statusTextView;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+        public ComplaintViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            title = itemView.findViewById(R.id.complaint_title);
-            description = itemView.findViewById(R.id.complaint_description);
+            // Make sure these IDs match your 'list_item_complaint.xml'
+            titleTextView = itemView.findViewById(R.id.complaintTitleTextView);
+            descriptionTextView = itemView.findViewById(R.id.complaintDescriptionTextView);
+            statusTextView = itemView.findViewById(R.id.complaintStatusTextView);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

@@ -1,178 +1,211 @@
 package com.example.ruralconnect;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.AdapterView; // Import AdapterView
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.EditText; // Use regular EditText if not using TextInputEditText in Java
+import android.widget.ImageView; // Import ImageView
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout; // Import TextInputLayout
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+// --- Imports for API ---
+import com.example.ruralconnect.model.Complaint;
+import com.example.ruralconnect.network.ApiService;
+import com.example.ruralconnect.network.RetrofitClient;
+import com.example.ruralconnect.utils.SessionManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Register_Complaint extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
+    private static final String TAG = "RegisterComplaint";
+    // --- Views matching your new XML IDs ---
+    private EditText nameEditText, contactEditText, locationEditText, complaintTextEditText, otherComplaintEditText;
+    private Spinner complaintTypeSpinner;
+    private TextInputLayout otherComplaintLayout; // To show/hide the "Other" field
+    private Button submitButton, addImageButton; // Correct button ID
+    private ImageView imageViewPreview; // For image preview
+    private ProgressBar progressBar; // Added ProgressBar
 
-    private EditText editTextName, editTextContact, editTextComplaint, editTextLocation, editTextOtherComplaint;
-    private Button buttonSubmit, buttonAddImage;
-    private ImageView imageViewPreview;
-    private Spinner spinnerComplaintType;
-    private TextInputLayout textFieldOtherComplaint;
-    private Uri imageUri;
-    private FusedLocationProviderClient fusedLocationProviderClient;
+    private SessionManager sessionManager;
+    private ApiService apiService;
+
+    // --- Complaint Type Options ---
+    // Add "Other" to the list
+    private final String[] complaintTypes = {"Electricity", "Water Supply", "Street Light", "Garbage Collection", "Other"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_complaint);
+        // Use the layout file name matching your XML
+        setContentView(R.layout.activity_add_complaint);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        // --- Setup ---
+        sessionManager = new SessionManager(getApplicationContext());
+        apiService = RetrofitClient.getApiService();
 
-        editTextName = findViewById(R.id.editTextName);
-        editTextContact = findViewById(R.id.editTextContact);
-        editTextLocation = findViewById(R.id.editTextLocation);
-        editTextComplaint = findViewById(R.id.editTextComplaint);
-        buttonSubmit = findViewById(R.id.buttonSubmit);
-        buttonAddImage = findViewById(R.id.buttonAddImage);
-        imageViewPreview = findViewById(R.id.imageViewPreview);
-        spinnerComplaintType = findViewById(R.id.spinnerComplaintType);
-        textFieldOtherComplaint = findViewById(R.id.textFieldOtherComplaint);
-        editTextOtherComplaint = findViewById(R.id.editTextOtherComplaint);
+        // --- Find Views using IDs from your XML ---
+        nameEditText = findViewById(R.id.editTextName);
+        contactEditText = findViewById(R.id.editTextContact);
+        complaintTypeSpinner = findViewById(R.id.spinnerComplaintType);
+        otherComplaintLayout = findViewById(R.id.textFieldOtherComplaint); // Find the layout
+        otherComplaintEditText = findViewById(R.id.editTextOtherComplaint); // Find the EditText inside
+        locationEditText = findViewById(R.id.editTextLocation);
+        complaintTextEditText = findViewById(R.id.editTextComplaint);
+        submitButton = findViewById(R.id.buttonSubmit); // Correct ID
+        addImageButton = findViewById(R.id.buttonAddImage); // Add Image button
+        imageViewPreview = findViewById(R.id.imageViewPreview); // Image preview
+        progressBar = findViewById(R.id.progressBar); // Find ProgressBar
 
-        // Populate Spinner
-        List<String> complaintTypes = new ArrayList<>();
-        complaintTypes.add("Electricity");
-        complaintTypes.add("Water Supply");
-        complaintTypes.add("Roads");
-        complaintTypes.add("Healthcare");
-        complaintTypes.add("Other");
+        // --- Setup Spinner ---
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, complaintTypes);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        complaintTypeSpinner.setAdapter(spinnerAdapter);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, complaintTypes);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerComplaintType.setAdapter(adapter);
-
-        spinnerComplaintType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // --- Spinner Logic for "Other" ---
+        complaintTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).toString().equals("Other")) {
-                    textFieldOtherComplaint.setVisibility(View.VISIBLE);
+                if (complaintTypes[position].equals("Other")) {
+                    otherComplaintLayout.setVisibility(View.VISIBLE);
                 } else {
-                    textFieldOtherComplaint.setVisibility(View.GONE);
+                    otherComplaintLayout.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                otherComplaintLayout.setVisibility(View.GONE);
+            }
+        });
+
+        // --- Check if user is logged in ---
+        if (!sessionManager.isLoggedIn()) {
+            Toast.makeText(this, "You must be logged in to report a problem", Toast.LENGTH_LONG).show();
+            // TODO: Send user to LoginActivity
+            finish();
+            return;
+        }
+
+        submitButton.setOnClickListener(v -> submitComplaint());
+
+        // --- TODO: Add Image Button Listener ---
+        addImageButton.setOnClickListener(v -> {
+            // We are skipping image handling for now
+            Toast.makeText(this, "Image upload not implemented yet", Toast.LENGTH_SHORT).show();
+            // Implement image picking here later (startActivityForResult or new ActivityResultLauncher)
+        });
+    }
+
+    private void submitComplaint() {
+        // 1. Get Values from Views
+        String name = nameEditText.getText().toString().trim();
+        String contact = contactEditText.getText().toString().trim();
+        String selectedType = complaintTypeSpinner.getSelectedItem().toString();
+        String location = locationEditText.getText().toString().trim();
+        String text = complaintTextEditText.getText().toString().trim();
+        String complaintType = selectedType;
+
+        // If "Other" is selected, use the text from the other field
+        if (selectedType.equals("Other")) {
+            complaintType = otherComplaintEditText.getText().toString().trim();
+            if (complaintType.isEmpty()) {
+                Toast.makeText(this, "Please specify the complaint type", Toast.LENGTH_SHORT).show();
+                otherComplaintEditText.setError("Required"); // Set error on the EditText
+                return;
+            }
+        }
+
+        // 2. Basic Validation
+        if (name.isEmpty() || contact.isEmpty() || location.isEmpty() || text.isEmpty()) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            // Optional: Set errors on the specific empty fields
+            if (name.isEmpty()) nameEditText.setError("Required");
+            if (contact.isEmpty()) contactEditText.setError("Required");
+            if (location.isEmpty()) locationEditText.setError("Required");
+            if (text.isEmpty()) complaintTextEditText.setError("Required");
+            return;
+        } else {
+            // Clear errors if fields are filled
+            nameEditText.setError(null);
+            contactEditText.setError(null);
+            locationEditText.setError(null);
+            complaintTextEditText.setError(null);
+            otherComplaintEditText.setError(null);
+        }
+
+
+        // 3. Show Loading State
+        submitButton.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
+
+        // 4. Get Auth Token
+        String authToken = sessionManager.getAuthToken();
+        if (authToken == null) {
+            Toast.makeText(this, "Session expired. Please log in again.", Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
+            submitButton.setEnabled(true);
+            // TODO: Send to LoginActivity
+            finish();
+            return;
+        }
+
+        // 5. Create Complaint POJO (using all fields)
+        Complaint newComplaint = new Complaint();
+        newComplaint.setName(name);
+        newComplaint.setContactNumber(contact);
+        newComplaint.setComplaintType(complaintType); // Use the final type
+        newComplaint.setLocation(location);
+        newComplaint.setComplaintText(text);
+        // newComplaint.setImageUrl(null); // Skipping image URL for now
+
+        Log.d(TAG, "Attempting to submit complaint: Name=" + name + ", Type=" + complaintType + ", Location=" + location); // Log key details
+
+        // 6. Make API Call
+        Call<Complaint> call = apiService.createComplaint(authToken, newComplaint);
+        call.enqueue(new Callback<Complaint>() {
+            @Override
+            public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                // Hide Loading State
+                progressBar.setVisibility(View.GONE);
+                submitButton.setEnabled(true);
+
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "Complaint submitted successfully! ID: " + (response.body() != null ? response.body().getId() : "null"));
+                    Toast.makeText(Register_Complaint.this, "Complaint submitted!", Toast.LENGTH_SHORT).show();
+
+                    // Return to previous screen (Complaints_List will refetch)
+                    setResult(RESULT_OK); // Signal success
+                    finish();
+
+                } else {
+                    Log.e(TAG, "API Error! Code: " + response.code() + " Body: " + response.errorBody());
+                    try {
+                        Log.e(TAG, "Error Body String: " + response.errorBody().string()); // Log the error message from backend
+                    } catch (Exception e) { Log.e(TAG, "Error reading error body", e); }
+                    Toast.makeText(Register_Complaint.this, "Failed to submit. Error: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
+            public void onFailure(Call<Complaint> call, Throwable t) {
+                // Hide Loading State
+                progressBar.setVisibility(View.GONE);
+                submitButton.setEnabled(true);
+                Log.e(TAG, "Network Failure!", t);
+                Toast.makeText(Register_Complaint.this, "Network error. Please try again.", Toast.LENGTH_LONG).show();
             }
         });
-
-        editTextLocation.setFocusable(false);
-        editTextLocation.setClickable(true);
-        editTextLocation.setOnClickListener(v -> fetchLocation());
-
-        buttonAddImage.setOnClickListener(v -> openFileChooser());
-
-        buttonSubmit.setOnClickListener(v -> {
-            String name = editTextName.getText().toString();
-            String contact = editTextContact.getText().toString();
-            String location = editTextLocation.getText().toString();
-            String complaint = editTextComplaint.getText().toString();
-            String complaintType = spinnerComplaintType.getSelectedItem().toString();
-
-            if (complaintType.equals("Other")) {
-                complaintType = editTextOtherComplaint.getText().toString();
-            }
-
-            Toast.makeText(Register_Complaint.this, "Complaint Registered!", Toast.LENGTH_SHORT).show();
-        });
-    }
-
-    private void fetchLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-        } else {
-            getLocation();
-        }
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
-                if (location != null) {
-                    try {
-                        Geocoder geocoder = new Geocoder(Register_Complaint.this, Locale.getDefault());
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        if (addresses != null && !addresses.isEmpty()) {
-                            String address = addresses.get(0).getAddressLine(0);
-                            editTextLocation.setText(address);
-                        } else {
-                            editTextLocation.setText("Lat: " + location.getLatitude() + ", Lon: " + location.getLongitude());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(Register_Complaint.this, "Failed to get address", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(Register_Complaint.this, "Unable to get location. Please enable GPS.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-    private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            imageViewPreview.setImageURI(imageUri);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                getLocation();
-            } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }

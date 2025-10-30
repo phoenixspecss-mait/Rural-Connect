@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:background="@android:drawable/dialog_holo_light_frame">
+
+    <TextView
+        android:id="@+id/complaintTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Complaint Type"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/complaintDescriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Complaint details..."
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/complaintStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Status: Lodged"
+        android:textStyle="italic" />
+
+</LinearLayout>
